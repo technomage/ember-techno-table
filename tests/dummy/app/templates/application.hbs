@@ -1,0 +1,10 @@
+{{#techno-table content=rows columns=testColumns
+  editComponent="editRow" as |t|}}
+  <h1>
+    {{#t.title}}Test Application{{/t.title}}
+    {{#t.tableMenu}}
+      {{t.menuSeparator}}
+      {{#t.menuItem}}Test{{/t.menuItem}}
+    {{/t.tableMenu}}
+  </h1>
+{{/techno-table}}

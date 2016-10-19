@@ -1,0 +1,17 @@
+{{yield}}
+<table>
+  <thead><tr>
+    {{#each columnSpecs as |c|}}
+      <th class="{{c.headingClassList}}">{{c.title}}</th>
+    {{/each}}
+  </tr></thead>
+  <tbody>
+    {{#each content as |obj|}}
+      <tr>
+        {{#each columnSpecs as |c|}}
+          <td class="{{c.bodyClassList}}">{{get obj c.name}}</td>
+        {{/each}}
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
