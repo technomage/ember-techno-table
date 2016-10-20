@@ -258,7 +258,7 @@ describeComponent('techno-table','Integration: TechnoTableComponent',
       expect(this.$().find('table').length,'table element').to.eq(1);
       expect(this.$().find('table tbody tr td').length,'column body count').to.eq(2);
       expect(this.$().find('table tbody tr td.c1:contains("testC1")').length,'column c1 body count').to.eq(1);
-      expect(this.$().find('table tbody tr td.c2 select').length,'column c2 body count').to.eq(1);
+      expect(this.$().find('table tbody tr td.c2 div.select-picker').length,'column c2 body count').to.eq(1);
     });
     it('can display a cell as a multi-value select');
     it('can display a cell as an association');

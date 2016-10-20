@@ -3,5 +3,6 @@ import layout from '../templates/components/techno-select-cell';
 
 export default Ember.Component.extend({
   layout: layout,
-  tagName: 'td'
+  tagName: 'td',
+  nativeMobile: false
 });

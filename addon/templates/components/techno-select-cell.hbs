@@ -1,8 +1,15 @@
-<select disabled={{disabled}} {{action 'change' on='change'}}>
-  {{#if prompt}}
-    <option disabled>{{prompt}}</option>
-  {{/if}}
-  {{#each options as |opt|}}
-    <option value={{opt}}>{{opt}}</option>
-  {{/each}}
-</select>
+{{#if prompt}}
+  {{#select-picker value=value content=options
+    optionValuePath=valuePath
+    optionLabelPath=labelPath
+    optionGroupPath=groupPath
+    nativeMobile=nativeMobile
+    prompt=prompt}}{{prompt}}{{/select-picker}}
+{{else}}
+  {{select-picker value=value content=options
+    optionValuePath=valuePath
+    optionLabelPath=labelPath
+    optionGroupPath=groupPath
+    nativeMobile=nativeMobile
+    prompt=prompt}}
+{{/if}}

@@ -1,29 +1,25 @@
 /* jshint expr:true */
 import Ember from 'ember';
 import { expect } from 'chai';
-import {
-  describeComponent,
-  it
-} from 'ember-mocha';
+import { describeComponent, it } from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
 
 describeComponent(
   'techno-select-cell',
   'Integration: TechnoSelectCellComponent',
-  {
-    integration: true
-  },
+  { integration: true },
   function() {
     it('renders with prompt', function() {
       this.render(hbs`{{techno-select-cell prompt='testing'}}`);
+      // console.log('@@@@ Cell: ',this.$().find('td').html());
       expect(this.$()).to.have.length(1);
-      expect(this.$().find('select option:contains("testing")').length, 'prompt options count').to.eq(1);
+      expect(this.$().find('div.select-picker li:contains("testing")').length, 'prompt options count').to.eq(1);
     });
     it('renders without prompt', function() {
       this.render(hbs`{{techno-select-cell}}`);
-      expect(this.$()).to.have.length(1);
-      expect(this.$().find('select option:contains("testing")').length, 'prompt options count').to.eq(0);
-      expect(this.$().find('select option').length, 'option count').to.eq(0);
+      // console.log('@@@@ Cell: ',this.$().find('td').html());
+      expect(this.$().find('div.select-picker li:contains("testing")'), 'prompt options count').to.have.length(0);
+      expect(this.$().find('div.select-picker li'), 'option count with prompt place holder').to.have.length(1);
     });
     it('renders options', function() {
       let options=Ember.A();
@@ -32,10 +28,25 @@ describeComponent(
       options.push('opt3');
       this.set('options', options);
       this.render(hbs`{{techno-select-cell options=options}}`);
-      expect(this.$().find('select option').length, 'option count').to.eq(3);
-      expect(this.$().find('select option:contains("opt1")').length, 'option count opt1').to.eq(1);
-      expect(this.$().find('select option:contains("opt2")').length, 'option count opt2').to.eq(1);
-      expect(this.$().find('select option:contains("opt3")').length, 'option count opt3').to.eq(1);
+      expect(this.$().find('div.select-picker li'), 'option count including prompt placeholder').to.have.length(3+1);
+      expect(this.$().find('div.select-picker li:contains("opt1")'), 'option count opt1').to.have.length(1);
+      expect(this.$().find('div.select-picker li:contains("opt2")'), 'option count opt2').to.have.length(1);
+      expect(this.$().find('div.select-picker li:contains("opt3")'), 'option count opt3').to.have.length(1);
+    });
+    it('renders options with labels', function() {
+      let options=Ember.A();
+      options.push(Ember.Object.create({name:'opt1',label:'Option 1'}));
+      options.push(Ember.Object.create({name:'opt2',label:'Option 2'}));
+      options.push(Ember.Object.create({name:'opt3',label:'Option 3'}));
+      this.set('options', options);
+      this.set('valuePath', 'content.name');
+      this.set('labelPath', 'content.label');
+      this.render(hbs`{{techno-select-cell options=options valuePath=valuePath labelPath=labelPath}}`);
+      // console.log('@@@@ Cell: ',this.$().find('td').html());
+      expect(this.$().find('div.select-picker li'), 'option count').to.have.length(3+1);
+      expect(this.$().find('div.select-picker li a[data-itemid="0"]:contains("Option 1")'), 'option count opt1').to.have.length(1);
+      expect(this.$().find('div.select-picker li a[data-itemid="1"]:contains("Option 2")'), 'option count opt2').to.have.length(1);
+      expect(this.$().find('div.select-picker li a[data-itemid="2"]:contains("Option 3")'), 'option count opt3').to.have.length(1);
     });
   }
 );

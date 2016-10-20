@@ -35,6 +35,7 @@
     "ember-cli-mocha": "0.10.4",
     "ember-cli-release": "^0.2.9",
     "ember-cli-sass": "5.5.1",
+    "ember-cli-select-picker": "2.3.6",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-test-loader": "^1.1.0",
     "ember-cli-uglify": "^1.2.0",
