@@ -242,7 +242,24 @@ describeComponent('techno-table','Integration: TechnoTableComponent',
       expect(this.$().find('table tbody tr td.c1 input[type="checkbox"]:not(:checked)').length,'column c1 unchecked body count').to.eq(1);
     });
     it('can display a cell as a list of tags');
-    it('can display a cell as a select');
+    it('can display a cell as a select', function() {
+      let cols = Ember.A();
+      cols.push(Ember.Object.create({title: 'c1', name: 'c1', bodyComponent: 'techno-text-cell'}));
+      cols.push(Ember.Object.create({title: 'c2', name: 'c2', bodyComponent: 'techno-select-cell'}));
+      this.set('cols', cols);
+      let objs = Ember.A();
+      objs.push(Ember.Object.create({c1:'testC1', c2:'testC2'}));
+      this.set('objs',objs);
+      this.render(hbs`
+        {{#techno-table content=objs columns=cols as |t|}}
+        {{/techno-table}}
+      `);
+      // console.log('@@@@ Table: ',this.$().find('table').html());
+      expect(this.$().find('table').length,'table element').to.eq(1);
+      expect(this.$().find('table tbody tr td').length,'column body count').to.eq(2);
+      expect(this.$().find('table tbody tr td.c1:contains("testC1")').length,'column c1 body count').to.eq(1);
+      expect(this.$().find('table tbody tr td.c2 select').length,'column c2 body count').to.eq(1);
+    });
     it('can display a cell as a multi-value select');
     it('can display a cell as an association');
   });
