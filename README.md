@@ -42,6 +42,7 @@ and body content based on the columns and content arguments.
 The editComponent argument defines the component that will be used for editing
 a row that is expanded.
 
+```handlebars
 {{#techno-table content=objects columns=columns
   editComponent="row-edit" as |t|}}
   <h3>
@@ -49,6 +50,7 @@ a row that is expanded.
     {{#t.tableMenu}}{{/t.tableMenu}}
   </h3>
 {{/techno-table}}
+```
 
 When using techno-table the list of columns is used to build
 the table level menu attached to the table as a whole.  This

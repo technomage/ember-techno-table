@@ -9,7 +9,11 @@
     {{#each content as |obj|}}
       <tr>
         {{#each columnSpecs as |c|}}
-          <td class="{{c.bodyClassList}}">{{get obj c.name}}</td>
+          {{#if c.bodyComponent}}
+            {{component c.bodyComponent class=c.bodyClassList value=(get obj c.name)}}
+          {{else}}
+            <td class="{{c.bodyClassList}}">{{get obj c.name}}</td>
+          {{/if}}
         {{/each}}
       </tr>
     {{/each}}
