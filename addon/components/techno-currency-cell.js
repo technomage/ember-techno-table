@@ -1,6 +1,6 @@
-/* global accounting */
 import Ember from 'ember';
 import layout from '../templates/components/techno-currency-cell';
+import accounting from 'accounting';
 
 export default Ember.Component.extend({
   layout: layout,
