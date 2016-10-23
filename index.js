@@ -2,5 +2,8 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-techno-table'
+  name: 'ember-techno-table',
+  isDevelopingAddon: function() {
+    return true;
+  }
 };

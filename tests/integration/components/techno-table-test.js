@@ -279,5 +279,54 @@ describeComponent('techno-table','Integration: TechnoTableComponent',
       expect(this.$().find('table tbody tr td.c2 div.select-picker').length,'column c2 body count').to.eq(1);
     });
     it('can display a cell as an association');
+    it('can display a cell as a formatted date', function() {
+      let cols = Ember.A();
+      cols.push(Ember.Object.create({title: 'c1', name: 'c1', bodyComponent: 'techno-date-cell'}));
+      cols.push(Ember.Object.create({title: 'c2', name: 'c2', bodyComponent: 'techno-text-cell'}));
+      this.set('cols', cols);
+      let objs = Ember.A();
+      let date = new Date('3/5/2016');
+      objs.push(Ember.Object.create({c1:date, c2:'testC2'}));
+      this.set('objs',objs);
+      this.render(hbs`
+        {{#techno-table content=objs columns=cols as |t|}}
+        {{/techno-table}}
+      `);
+      // console.log('@@@@ Table: ',this.$().find('table').html());
+      expect(this.$().find('table').length,'table element').to.eq(1);
+      expect(this.$().find('table tbody tr td').length,'column body count').to.eq(2);
+      expect(this.$().find('table tbody tr td.c1:contains("3/5/2016")').length,'column c1 body count').to.eq(1);
+      expect(this.$().find('table tbody tr td.c2:contains("testC2")').length,'column c2 body count').to.eq(1);
+    });
+    it('can display a cell as a date with picker');
+    it('can display a cell as a formatted number');
+    it('can display a cell as a formatted currency value');
+  });
+  describe('formatting', function() {
+    it('uses bootstrap classes in layout', function() {
+      let cols = Ember.A();
+      cols.push(Ember.Object.create({title: 'c1', name: 'c1'}));
+      cols.push(Ember.Object.create({title: 'c2', name: 'c2'}));
+      this.set('cols', cols);
+      let objs = Ember.A();
+      for (let i=0; i<10; i++) {
+        objs.push(Ember.Object.create({c1:`testC1-${i}`, c2:`testC2-${i}`}));
+      }
+      this.set('objs',objs);
+      this.render(hbs`
+        {{#techno-table content=objs columns=cols as |t|}}
+        {{/techno-table}}
+      `);
+      // console.log('@@@@ Table: ',this.$().find('table').html());
+      expect(this.$().find('table.table'),'bootstrap styled table').to.have.length(1);
+    });
+  });
+  describe('actions', function() {
+    it('shows table level actions to create new rows when enabled');
+    it('hides table level actions to create new rows when not enabled');
+    it('shows edit actions on rows that are editable by the current user');
+    it('hides edit actions on rows that are not ediable by the current user');
+    it('shows custom actions on rows where supplied');
+    it('disables custom actions on rows where supplied but not available for a row');
   });
 });
