@@ -111,6 +111,26 @@ describeComponent('techno-table','Integration: TechnoTableComponent',
         expect(this.$().find(`table tbody tr td.c2:contains("testC2-${i}")`).length,'column c2 body count').to.eq(1);
       }
     });
+    it('renders the title as a local component', function() {
+      this.set('aList', Ember.A());
+      this.set('cols', Ember.A());
+      this.render(hbs`
+        {{#techno-table content=aList columns=cols as |tt|}}
+          {{#tt.title}}Title{{/tt.title}}
+        {{/techno-table}}
+      `);
+      expect(this.$().find("h1:contains('Title')").length,'title in h1').to.eq(1);
+    });
+    it('renders the title as a local component with customizable element', function() {
+      this.set('aList', Ember.A());
+      this.set('cols', Ember.A());
+      this.render(hbs`
+        {{#techno-table content=aList columns=cols as |tt|}}
+          {{#tt.title tagName="h2"}}Title{{/tt.title}}
+        {{/techno-table}}
+      `);
+      expect(this.$().find("h2:contains('Title')").length,'title in h1').to.eq(1);
+    });
   });
   describe('binding to content', function() {
     it('updates the content when the bound objects change', function() {
