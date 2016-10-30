@@ -404,7 +404,14 @@ describeComponent('techno-table','Integration: TechnoTableComponent',
       });
       let dc = Ember.Component.extend({
         layout: hbs`<h3>Dummy {{model.title}}</h3>
-          {{input value=model.data}}>`
+          <input value={{ model.data}} {{action 'inputChange' on='change'}}>`,
+        actions: {
+          inputChange: function() {
+            let update = this.$().find('input').val();
+            this.get('model').set('data',update);
+            this.get('objChange')(this.get('model'));
+          }
+        }
       });
       this.register('component:dummy-create',dc);
       this.render(hbs`

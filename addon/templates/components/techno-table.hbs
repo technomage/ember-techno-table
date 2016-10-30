@@ -11,7 +11,7 @@
   <tbody>
     {{#if showCreate}}
       <tr colspan="1000" class="create">
-        {{component createComponent model=newObj change=(action 'newObjChanged')}}
+        {{component createComponent model=newObj objChange=(action 'newObjChanged')}}
       </tr>
     {{/if}}
     {{#each content as |obj|}}
