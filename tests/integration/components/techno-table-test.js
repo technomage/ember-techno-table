@@ -131,6 +131,22 @@ describeComponent('techno-table','Integration: TechnoTableComponent',
       `);
       expect(this.$().find("h2:contains('Title')").length,'title in h1').to.eq(1);
     });
+    it('renders with a create component when showCreate is true', function() {
+      this.set('aList', Ember.A());
+      this.set('cols', Ember.A());
+      let dc = Ember.Component.extend({
+        layout: hbs`<h3>Dummy</h3>`
+      });
+      this.register('component:dummy-create',dc);
+      this.render(hbs`
+        {{#techno-table content=aList columns=cols showCreate=true
+          createComponent="dummy-create" as |tt|}}
+        {{/techno-table}}
+      `);
+      expect(this.$().find("table tbody tr.create"),'create components').to.have.length(1);
+      expect(this.$().find("table tbody tr.create h3:contains('Dummy')"),
+        'create component content').to.have.length(1);
+    });
   });
   describe('binding to content', function() {
     it('updates the content when the bound objects change', function() {

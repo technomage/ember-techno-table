@@ -6,6 +6,11 @@
     {{/each}}
   </tr></thead>
   <tbody>
+    {{#if showCreate}}
+      <tr colspan="1000" class="create">
+        {{component createComponent model=newObj}}
+      </tr>
+    {{/if}}
     {{#each content as |obj|}}
       <tr>
         {{#each columnSpecs as |c|}}
