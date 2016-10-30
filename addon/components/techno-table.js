@@ -17,6 +17,9 @@ export default Ember.Component.extend({
     showCreateComponent: function(obj) {
       this.set('newObj', obj);
       this.set('showCreate',true);
+    },
+    newObjChanged: function() {
+      this.get('objModified')(this.get('newObj'));
     }
   }
 });

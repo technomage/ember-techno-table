@@ -390,5 +390,43 @@ describeComponent('techno-table','Integration: TechnoTableComponent',
       expect(this.$().find("table tbody tr.create h3:contains('Dummy testing title')"),
         'create component content').to.have.length(1);
     });
+    it('provides an action for changes to the created object', function() {
+      this.set('aList', Ember.A());
+      this.set('cols', Ember.A());
+      let obj = Ember.Object.create({title:'testing title',data:'no data'});
+      this.on('showCreate', function(act) {
+        act(obj);
+      });
+      let actionCalled = false;
+      this.on('objModifiedInTable', function(obj) {
+        expect(obj.get('data'),'data in action').to.eq('Has Data');
+        actionCalled = true;
+      });
+      let dc = Ember.Component.extend({
+        layout: hbs`<h3>Dummy {{model.title}}</h3>
+          {{input value=model.data}}>`
+      });
+      this.register('component:dummy-create',dc);
+      this.render(hbs`
+        {{#techno-table content=aList columns=cols objModified=(action 'objModifiedInTable')
+          createComponent="dummy-create" as |tt|}}
+          {{#tt.title}}Dummy <<button {{action 'showCreate' tt.createAction}}>Create</button>{{/tt.title}}
+        {{/techno-table}}
+      `);
+      expect(this.$().find("table tbody tr.create"),'create components').to.have.length(0);
+      expect(this.$().find("table tbody tr.create h3:contains('Dummy')"),
+        'create component content').to.have.length(0);
+      this.$().find('button').click();
+      expect(this.$().find("table tbody tr.create"),'create components').to.have.length(1);
+      expect(this.$().find("table tbody tr.create h3:contains('Dummy testing title')"),
+        'create component content').to.have.length(1);
+      expect(this.$().find("table tbody tr.create input").val(),
+        'data input element value').to.eq('no data');
+      this.$().find("table tbody tr.create input").val('Has Data').change();
+      expect(this.$().find("table tbody tr.create input").val(),
+        'data input element value').to.eq('Has Data');
+      expect(obj.get('data'),'data in created object').to.eq('Has Data');
+      expect(actionCalled,'action called on object change').to.be.true;
+    });
   });
 });
