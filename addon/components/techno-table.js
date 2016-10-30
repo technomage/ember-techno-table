@@ -18,8 +18,8 @@ export default Ember.Component.extend({
       this.set('newObj', obj);
       this.set('showCreate',true);
     },
-    newObjChanged: function() {
-      this.get('objModified')(this.get('newObj'));
+    newObjChanged: function(obj) {
+      this.get('objModified')(obj);
     }
   }
 });
