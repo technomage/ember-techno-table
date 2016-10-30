@@ -40,13 +40,24 @@ Following the enclosed content, techno-table renders the column headers
 and body content based on the columns and content arguments.
 
 The editComponent argument defines the component that will be used for editing
-a row that is expanded.
+a row, and createComponent will be used to create a new object when showCreate
+is true.  The createComponent is made visible when the createAction is invoked
+by the contained block and an unsaved new object provided as the argument to the
+action.
+
+```javascript
+actions: {
+  showCreate: function(act) {
+    act(newObj);
+  }
+}
+```
 
 ```handlebars
 {{#techno-table content=objects columns=columns
-  editComponent="row-edit" as |t|}}
+  createComponent="row-edit" as |t|}}
   <h3>
-    {{#t.title}}Techno {{t.obj.name}}{{/t.title}}
+    {{#t.title}}Techno <a {{action 'showCreate' t.createAction}}{{/t.title}}
     {{#t.tableMenu}}{{/t.tableMenu}}
   </h3>
 {{/techno-table}}
