@@ -57,7 +57,7 @@ actions: {
 {{#techno-table content=objects columns=columns
   createComponent="row-edit" as |t|}}
   <h3>
-    {{#t.title}}Techno <a {{action 'showCreate' t.createAction}}{{/t.title}}
+    {{#t.title}}Techno <a {{action 'showCreate' t.createAction}}>create</a>{{/t.title}}
     {{#t.tableMenu}}{{/t.tableMenu}}
   </h3>
 {{/techno-table}}
