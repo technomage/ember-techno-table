@@ -1,4 +1,7 @@
-{{yield (hash title=(component 'techno-table-title'))}}
+{{yield (hash
+  title=(component 'techno-table-title')
+  createAction=(action 'showCreateComponent')
+)}}
 <table class="table">
   <thead><tr>
     {{#each columnSpecs as |c|}}

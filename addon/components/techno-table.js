@@ -12,5 +12,11 @@ export default Ember.Component.extend({
       specs.push(s);
     }
     return specs;
-  })
+  }),
+  actions: {
+    showCreateComponent: function(obj) {
+      this.set('newObj', obj);
+      this.set('showCreate',true);
+    }
+  }
 });

@@ -364,5 +364,31 @@ describeComponent('techno-table','Integration: TechnoTableComponent',
     it('hides edit actions on rows that are not ediable by the current user');
     it('shows custom actions on rows where supplied');
     it('disables custom actions on rows where supplied but not available for a row');
+    it('disables custom actions on rows where supplied but not available to a user');
+    it('provides an action for creating an object', function() {
+      this.set('aList', Ember.A());
+      this.set('cols', Ember.A());
+      this.on('showCreate', function(act) {
+        let obj = Ember.Object.create({title:'testing title'});
+        act(obj);
+      });
+      let dc = Ember.Component.extend({
+        layout: hbs`<h3>Dummy {{model.title}}</h3>`
+      });
+      this.register('component:dummy-create',dc);
+      this.render(hbs`
+        {{#techno-table content=aList columns=cols
+          createComponent="dummy-create" as |tt|}}
+          {{#tt.title}}Dummy <<button {{action 'showCreate' tt.createAction}}>Create</button>{{/tt.title}}
+        {{/techno-table}}
+      `);
+      expect(this.$().find("table tbody tr.create"),'create components').to.have.length(0);
+      expect(this.$().find("table tbody tr.create h3:contains('Dummy')"),
+        'create component content').to.have.length(0);
+      this.$().find('button').click();
+      expect(this.$().find("table tbody tr.create"),'create components').to.have.length(1);
+      expect(this.$().find("table tbody tr.create h3:contains('Dummy testing title')"),
+        'create component content').to.have.length(1);
+    });
   });
 });
