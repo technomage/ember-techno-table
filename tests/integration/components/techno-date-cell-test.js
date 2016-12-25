@@ -14,17 +14,11 @@ describeComponent(
   },
   function() {
     it('renders', function() {
-      // Set any properties with this.set('myProperty', 'value');
-      // Handle any actions with this.on('myAction', function(val) { ... });
-      // Template block usage:
-      // this.render(hbs`
-      //   {{#techno-date-cell}}
-      //     template content
-      //   {{/techno-date-cell}}
-      // `);
-
-      this.render(hbs`{{techno-date-cell}}`);
+      this.set('date', new Date("1/1/1925"));
+      this.render(hbs`{{techno-date-cell value=date}}`);
       expect(this.$()).to.have.length(1);
+      expect(this.$().find('td')).to.have.length(1);
+      expect(this.$().find('td:contains("1/1/1925")')).to.have.length(1);
     });
   }
 );
