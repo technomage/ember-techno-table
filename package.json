@@ -48,6 +48,7 @@
     "ember-load-initializers": "^0.5.1",
     "ember-mocha": "0.8.11",
     "ember-resolver": "^2.0.3",
+    "ember-truth-helpers": "1.2.0",
     "ember-welcome-page": "^1.0.1",
     "loader.js": "^4.0.1"
   },

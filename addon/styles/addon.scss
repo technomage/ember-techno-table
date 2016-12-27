@@ -1,1 +1,14 @@
 
+.techno-table .sort-symbol {
+  float: right;
+  display: block;
+  font-family: 'Glyphicons Halflings';
+}
+
+.techno-table .sortable-column {
+  cursor: pointer;
+}
+
+.techno-table span.sorting {
+  opacity: 0.5;
+}

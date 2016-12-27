@@ -1,0 +1,15 @@
+
+{{#if (if editComponent editing false)}}
+  <td colspan="1000">
+    <div><a href="" {{action 'close'}}>&times; Edit</a></div>
+    {{component editComponent class='edit-row' model=obj}}
+  </td>
+{{else}}
+  {{#each columnSpecs as |c|}}
+    {{#if c.bodyComponent}}
+      {{component c.bodyComponent class=c.bodyClassList spec=c value=(get obj c.name) fireAction=(action 'fireAction' obj)}}
+    {{else}}
+      <td class="{{c.bodyClassList}}">{{get obj c.name}}</td>
+    {{/if}}
+  {{/each}}
+{{/if}}

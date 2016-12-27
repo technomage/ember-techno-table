@@ -2,28 +2,30 @@
   title=(component 'techno-table-title')
   createAction=(action 'showCreateComponent')
 )}}
-<table class="table">
+<table class="table techno-table">
   <thead><tr>
     {{#each columnSpecs as |c|}}
-      <th class="{{c.headingClassList}}">{{c.title}}</th>
+      {{#if c.sortable}}
+        <th class="{{c.headingClassList}} sortable-column" {{action 'changeSort' c.name}}>{{c.title}}
+        <span
+        class='sort-symbol {{if (not-eq c.name sortColumn) 'sorting' sortDirectionClass}}'
+        >{{{sortIndicator}}}</span></th>
+      {{else}}
+        <th class="{{c.headingClassList}}">{{c.title}}</th>
+      {{/if}}
     {{/each}}
   </tr></thead>
   <tbody>
     {{#if showCreate}}
-      <tr colspan="1000" class="create">
-        {{component createComponent model=newObj objChange=(action 'newObjChanged')}}
+      <tr class="create">
+        <td colspan="1000">
+          <div><a href="" {{action 'closeCreate'}}>&times; Create</a></div>
+          {{component createComponent model=newObj objChange=(action 'newObjChanged')}}
+        </td>
       </tr>
     {{/if}}
     {{#each content as |obj|}}
-      <tr>
-        {{#each columnSpecs as |c|}}
-          {{#if c.bodyComponent}}
-            {{component c.bodyComponent class=c.bodyClassList spec=c value=(get obj c.name)}}
-          {{else}}
-            <td class="{{c.bodyClassList}}">{{get obj c.name}}</td>
-          {{/if}}
-        {{/each}}
-      </tr>
+      {{techno-table-row obj=obj columnSpecs=columnSpecs editComponent=editComponent}}
     {{/each}}
   </tbody>
 </table>
